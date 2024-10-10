@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
     private final RoleRepository roleRepository;
 
     public Optional<UserEntity> findUserByUsername(String username) {
-        return Optional.of(userEntityRepository.findUserEntityByUsername(username))
+        return Optional.ofNullable(userEntityRepository.findUserEntityByUsername(username))
                 .orElseThrow( () -> new NoSuchUserException("No such user: " + username));
     }
 
