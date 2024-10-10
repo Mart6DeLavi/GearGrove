@@ -2,16 +2,6 @@ spring:
   application:
     name: GearGrove
 
-  flyway:
-    baseline-on-migrate: true
-    baseline-version: 0
-
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/Gear_Grove_Users
-    username: postgres
-    password: 28859013
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -21,6 +11,21 @@ spring:
   main:
     allow-bean-definition-overriding: true
     allow-circular-references: true
+
+geargrove:
+  login:
+    datasource:
+      url: jdbc:postgresql://localhost:5432/Gear_Grove_Users
+      username: postgres
+      password: 28859013
+      driver-class-name: org.postgresql.Driver
+  products:
+    datasource:
+      url: jdbc:postgresql://localhost:5432/Gear_Grove_Products
+      username: postgres
+      password: 28859013
+      driver-class-name: org.postgresql.Driver
+
 jwt:
   user_secret: s2v6asadsas1fsde1CSsaf2rewfas902u0aJWsgGIQ7382bfjafqfhqhfo
   user_secret_lifetime: 10m
