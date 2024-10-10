@@ -47,7 +47,7 @@ public class UserService implements UserDetailsService {
             user.setRegistrationDate(userRegistrationDto.getRegistrationDate());
             user.setAddress(userRegistrationDto.getAddress());
 
-            Role userRole = roleRepository.findByName("ROLE_USER");
+            Role userRole = roleRepository.findByName("USER");
             if (userRole == null) {
                 throw new NoSuchRoleException("Role ROLE_USER not found in the database");
             }

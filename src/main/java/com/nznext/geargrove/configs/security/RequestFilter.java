@@ -28,36 +28,57 @@ public class RequestFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        // Логируем информацию о входящем запросе
+        log.info("Incoming request: {} {}", request.getMethod(), request.getRequestURL());
+
         String authHeader = request.getHeader("Authorization");
         String username = null;
         String jwtToken = null;
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwtToken = authHeader.substring(7);
+            log.info("Extracted JWT token: {}", jwtToken);  // Логируем токен (не рекомендуется логировать сам токен в продуктиве, лучше логировать, что он есть)
+
             try {
                 if (jwtTokenUtils.isValidToken(jwtToken)) {
                     username = jwtTokenUtils.getUsername(jwtToken);
+                    log.info("Valid token for user: {}", username);
+                } else {
+                    log.warn("Invalid token received");
                 }
-            } catch (ExpiredJwtException | SignatureException ex) {
-                log.error(ex.getMessage());
+            } catch (ExpiredJwtException ex) {
+                log.error("Expired JWT token: {}", ex.getMessage());
+            } catch (SignatureException ex) {
+                log.error("Invalid signature in JWT token: {}", ex.getMessage());
+            } catch (Exception ex) {
+                log.error("Exception while validating JWT token: {}", ex.getMessage());
             }
+        } else {
+            log.warn("Authorization header is missing or does not start with 'Bearer '");
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
             if (jwtTokenUtils.isValidToken(jwtToken)) {
-
                 @SuppressWarnings("unchecked")
-                List<String> roles = (List<String>) jwtTokenUtils.getRolesFromToken(jwtToken);
+                List<String> roles = jwtTokenUtils.getRolesFromToken(jwtToken);
+                log.info("Roles extracted from token: {}", roles);
 
                 authorities.addAll(roles.stream()
                         .map(SimpleGrantedAuthority::new)
                         .toList());
+                log.info("Granted authorities: {}", authorities);
             }
+
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, jwtToken, authorities);
             SecurityContextHolder.getContext().setAuthentication(token);
+            log.info("Authentication set for user: {}", username);
+        } else {
+            log.warn("No valid username found, skipping authentication");
         }
+
+        // Пропускаем фильтр дальше
         filterChain.doFilter(request, response);
     }
 }
