@@ -30,12 +30,6 @@ public class UserEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "name", nullable = false, length = 40)
-    private String name;
-
-    @Column(name = "surname", nullable = false, length = 40)
-    private String surname;
-
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;
 

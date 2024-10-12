@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -41,13 +42,11 @@ public class UserService implements UserDetailsService {
         try {
             user.setUsername(userRegistrationDto.getUsername());
             user.setEmail(userRegistrationDto.getEmail());
-            user.setName(userRegistrationDto.getName());
-            user.setSurname(userRegistrationDto.getSurname());
             user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
-            user.setRegistrationDate(userRegistrationDto.getRegistrationDate());
+            user.setRegistrationDate(LocalDateTime.now());
             user.setAddress(userRegistrationDto.getAddress());
 
-            Role userRole = roleRepository.findByName("ROLE_USER");
+            Role userRole = roleRepository.findByName("USER");
             if (userRole == null) {
                 throw new NoSuchRoleException("Role ROLE_USER not found in the database");
             }
