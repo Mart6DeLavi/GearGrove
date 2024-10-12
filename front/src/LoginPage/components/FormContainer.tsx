@@ -14,13 +14,11 @@ const FormContainer: React.FC<FormContainerProps> = ({ type }) => {
 
                 {type === 'sign-up' ? (
                     <>
-                        <input type="text" placeholder="Name"/>
-                        <input type="text" placeholder="Second Name"/>
-                        <input type="text" placeholder="Username" />
-                        <input type="text" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
-                        <input type="password
-                        " placeholder="Confirm Password" />
+                        <input type="text" placeholder="Username"/>
+                        <input type="text" placeholder="Email"/>
+                        <input type="text" placeholder="Address"/>
+                        <input type="password" placeholder="Password"/>
+                        <input type="password" placeholder="Confirm Password"/>
                         <button>Sign up</button>
                     </>
                 ) : (
