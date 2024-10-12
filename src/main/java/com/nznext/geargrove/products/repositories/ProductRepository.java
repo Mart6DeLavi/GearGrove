@@ -14,4 +14,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("SELECT COALESCE(SUM(product.quantity), 0) FROM Product product WHERE product.productName = :productName")
     Integer quantityByProductName(@Param("productName") String productName);
+
+    Optional<Object> findById(Long productId);
 }
