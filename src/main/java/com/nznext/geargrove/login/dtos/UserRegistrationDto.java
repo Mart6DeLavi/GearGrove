@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -17,8 +15,5 @@ public class UserRegistrationDto {
     String email;
     String password;
     String confirmPassword;
-    String name;
-    String surname;
-    LocalDateTime registrationDate;
     String address;
 }
