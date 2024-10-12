@@ -23,6 +23,12 @@ geargrove:
       username: postgres
       password: 28859013
       driver-class-name: org.postgresql.Driver
+  orders:
+    datasource:
+      url: jdbc:postgresql://localhost:5432/Gear_Grove_Orders
+      username: postgres
+      password: 28859013
+      driver-class-name: org.postgresql.Driver
 
 jwt:
   user_secret: s2v6asadsas1fsde1CSsaf2rewfas902u0aJWsgGIQ7382bfjafqfhqhfo

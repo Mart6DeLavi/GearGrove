@@ -1,54 +1,47 @@
-package com.nznext.geargrove.login.entities;
+package com.nznext.geargrove.orders.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CollectionId;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Table(name = "users")
-public class UserEntity {
+@Table(name = "orders")
+public class Order {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "username", nullable = false, unique = true, length = 60)
+    @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "email", nullable = false)
-    private String email;
+    @Column(name = "date", nullable = false)
+    private Date orderDate;
 
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "status", nullable = false)
+    private String status;
 
-    @Column(name = "name", nullable = false, length = 40)
-    private String name;
-
-    @Column(name = "surname", nullable = false, length = 40)
-    private String surname;
-
-    @Column(name = "registration_date")
-    private LocalDateTime registrationDate;
-
-    @Column(name = "address", nullable = false, length = 30)
-    private String address;
+    @Column(name = "sum", nullable = false)
+    private Double sum;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_Id"),
-            inverseJoinColumns = @JoinColumn(name = "role_Id")
+            name = "user_orders",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id")
     )
-    private Collection<Role> roles;
+    private Collection<Order> orders;
 
     @Override
     public final boolean equals(Object object) {
@@ -57,8 +50,8 @@ public class UserEntity {
         Class<?> oEffectiveClass = object instanceof HibernateProxy ? ((HibernateProxy) object).getHibernateLazyInitializer().getPersistentClass() : object.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        UserEntity that = (UserEntity) object;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        Order order = (Order) object;
+        return getId() != null && Objects.equals(getId(), order.getId());
     }
 
     @Override
