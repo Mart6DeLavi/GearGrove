@@ -37,4 +37,4 @@ out/
 .vscode/
 
 
-./front/node_modules
+/front/node_modules
