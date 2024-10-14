@@ -50,8 +50,10 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll()
+                .authorizeHttpRequests(authorize -> authorize   
+                        .requestMatchers("/create",
+                                "/login").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class)
