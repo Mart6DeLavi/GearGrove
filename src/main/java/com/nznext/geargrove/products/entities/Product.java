@@ -2,14 +2,12 @@ package com.nznext.geargrove.products.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@Entity
+
 @Getter
 @Setter
-@RequiredArgsConstructor
-@Table(name = "products")
+@MappedSuperclass
 public class Product {
     @Id
     @Column(name = "id")
@@ -30,4 +28,7 @@ public class Product {
 
     @Column(name = "supplier", nullable = false, length = 100)
     private String supplier;
+
+    @Column(name = "year", nullable = false)
+    private Integer year;
 }
