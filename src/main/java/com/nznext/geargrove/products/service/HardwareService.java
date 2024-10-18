@@ -1,10 +1,11 @@
 package com.nznext.geargrove.products.service;
 
+
 import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
-import com.nznext.geargrove.products.entities.CoolingSystemEntity;
+import com.nznext.geargrove.products.entities.HardwareEntity;
 import com.nznext.geargrove.products.exception.NoSuchProductException;
 import com.nznext.geargrove.products.exception.SoldOutException;
-import com.nznext.geargrove.products.repositories.CoolingSystemRepository;
+import com.nznext.geargrove.products.repositories.HardwareRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -16,22 +17,23 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CoolingSystemService {
-    private final CoolingSystemRepository coolingSystemRepository;
+public class HardwareService {
 
-    public CoolingSystemEntity createNewProduct(CoolingSystemEntity product) {
+    private final HardwareRepository hardwareRepository;
+
+    public HardwareEntity createNewProduct(HardwareEntity product) {
         log.info("Created product: {} successfully", product.getProductName());
-        return coolingSystemRepository.save(product);
+        return hardwareRepository.save(product);
     }
 
     @Async
     public CompletableFuture<Optional<FindProductByproductNameInformationDto>> findProductByProductName(String productName) {
         return CompletableFuture.supplyAsync(() -> {
-            var quantity = coolingSystemRepository.quantityByProductName(productName);
+            var quantity = hardwareRepository.quantityByProductName(productName);
             if (quantity == 0) {
                 throw new SoldOutException("This product is sold out. Sorry😢");
             }
-            return coolingSystemRepository.findProductByProductName(productName)
+            return hardwareRepository.findProductByProductName(productName)
                     .map(product -> new FindProductByproductNameInformationDto(
                             product.getProductName(),
                             product.getPrice(),
@@ -43,8 +45,8 @@ public class CoolingSystemService {
         });
     }
 
-    public Optional<CoolingSystemEntity> updateProductInformation(Integer productId, CoolingSystemEntity updatedProduct) {
-        return coolingSystemRepository.findById(productId)
+    public Optional<HardwareEntity> updateProductInformation(Integer productId, HardwareEntity updatedProduct) {
+        return hardwareRepository.findById(productId)
                 .map(product -> {
                     if (updatedProduct.getProductName() != null) {
                         product.setProductName(updatedProduct.getProductName());
@@ -55,12 +57,12 @@ public class CoolingSystemService {
                     if (updatedProduct.getQuantity() != null) {
                         product.setQuantity(updatedProduct.getQuantity());
                     }
-                    return coolingSystemRepository.save(product);
+                    return hardwareRepository.save(product);
                 });
     }
 
     public void deleteProduct(Integer productId) {
-        coolingSystemRepository.deleteById(productId);
+        hardwareRepository.deleteById(productId);
         log.info("Deleted product: {}", productId);
     }
 }

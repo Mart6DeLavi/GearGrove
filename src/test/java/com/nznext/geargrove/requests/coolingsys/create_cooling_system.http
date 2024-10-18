@@ -1,0 +1,15 @@
+### Create new cooling system
+POST http://localhost:8080/products/coolingsys/create
+Content-Type: application/json
+
+{
+  "productName": "CoolMaster 5000",
+  "description": "High-performance cooling system for gaming PCs",
+  "price": 129.99,
+  "quantity": 50,
+  "supplier": "CoolTech Industries",
+  "year": 2023,
+  "purpose": "PROCESSOR",
+  "type": "EXTERNAL",
+  "fanDiameter": "MM120"
+}

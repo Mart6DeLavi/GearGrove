@@ -1,6 +1,7 @@
 package com.nznext.geargrove.products.entities;
 
 import com.nznext.geargrove.products.enums.ssd.Interface;
+import com.nznext.geargrove.products.enums.ssd.MemoryType;
 import com.nznext.geargrove.products.enums.ssd.Types;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -28,8 +29,9 @@ public class SSDEntity extends Product{
     @Column(name = "interface", nullable = false)
     private Interface interface_;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "memory_type", nullable = false)
-    private Types memoryType;
+    private MemoryType memoryType;
 
     @Override
     public final boolean equals(Object object) {

@@ -1,38 +1,38 @@
 package com.nznext.geargrove.products.service;
 
 import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
-import com.nznext.geargrove.products.entities.Product;
+import com.nznext.geargrove.products.entities.SSDEntity;
 import com.nznext.geargrove.products.exception.NoSuchProductException;
 import com.nznext.geargrove.products.exception.SoldOutException;
+import com.nznext.geargrove.products.repositories.SSDRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-@Slf4j
-public class ProductService<T extends Product> {
+public class SSDService {
 
-    private final JpaRepository<T, Integer> productRepository;
+    private final SSDRepository ssdRepository;
 
-    public T createNewProduct(T product) {
+    public SSDEntity createNewProduct(SSDEntity product) {
         log.info("Created product: {} successfully", product.getProductName());
-        return productRepository.save(product);
+        return ssdRepository.save(product);
     }
 
     @Async
     public CompletableFuture<Optional<FindProductByproductNameInformationDto>> findProductByProductName(String productName) {
         return CompletableFuture.supplyAsync(() -> {
-            var quantity = productRepository.quantityByProductName(productName);
+            var quantity = ssdRepository.quantityByProductName(productName);
             if (quantity == 0) {
                 throw new SoldOutException("This product is sold out. Sorry😢");
             }
-            return productRepository.findProductByProductName(productName)
+            return ssdRepository.findProductByProductName(productName)
                     .map(product -> new FindProductByproductNameInformationDto(
                             product.getProductName(),
                             product.getPrice(),
@@ -44,8 +44,8 @@ public class ProductService<T extends Product> {
         });
     }
 
-    public Optional<T> updateProductInformation(Integer productId, T updatedProduct) {
-        return productRepository.findById(productId)
+    public Optional<SSDEntity> updateProductInformation(Integer productId, SSDEntity updatedProduct) {
+        return ssdRepository.findById(productId)
                 .map(product -> {
                     if (updatedProduct.getProductName() != null) {
                         product.setProductName(updatedProduct.getProductName());
@@ -56,13 +56,12 @@ public class ProductService<T extends Product> {
                     if (updatedProduct.getQuantity() != null) {
                         product.setQuantity(updatedProduct.getQuantity());
                     }
-                    return productRepository.save(product);
+                    return ssdRepository.save(product);
                 });
     }
 
     public void deleteProduct(Integer productId) {
-        productRepository.deleteById(productId);
+        ssdRepository.deleteById(productId);
         log.info("Deleted product: {}", productId);
     }
 }
-

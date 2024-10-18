@@ -9,11 +9,5 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface GraphicCardRepository extends JpaRepository<GraphicCardEntity, Integer> {
-
-    @Query("SELECT product FROM GraphicCardEntity product WHERE product.productName = :productName")
-    Optional<GraphicCardEntity> findProductByProductName(@Param("productName") String productName);
-
-    @Query("SELECT COALESCE(SUM(product.quantity), 0) FROM GraphicCardEntity product WHERE product.productName = :productName")
-    Integer quantityByProductName(@Param("productName") String productName);
+public interface GraphicCardRepository extends ProductRepository<GraphicCardEntity> {
 }

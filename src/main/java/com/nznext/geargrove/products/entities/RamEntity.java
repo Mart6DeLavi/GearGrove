@@ -33,7 +33,7 @@ public class RamEntity extends Product{
     private CASLatency casLatency;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "clock_speed", nullable = false)
+    @Column(name = "operating_voltage", nullable = false)
     private OperatingVoltage operatingVoltage;
 
     @Override

@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 
-@NoRepositoryBean  // Эта аннотация предотвращает создание бина для этого репозитория
+@NoRepositoryBean
 public interface ProductRepository<T extends Product> extends JpaRepository<T, Integer> {
 
     @Query("SELECT product FROM #{#entityName} product WHERE product.productName = :productName")

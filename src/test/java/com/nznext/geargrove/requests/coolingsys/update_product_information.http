@@ -1,0 +1,14 @@
+PATCH http://localhost:8080/products/coolingsys/update/2
+Content-Type: application/json
+
+{
+  "productName": "Cooler Master Hyper 212 EVO",
+  "description": "Updated efficient cooling system for processors",
+  "price": 65.99,
+  "quantity": 120,
+  "supplier": "Cooler Master",
+  "year": 2024,
+  "purpose": "PROCESSOR",
+  "type": "EXTERNAL",
+  "fanDiameter": "MM120"
+}

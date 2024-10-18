@@ -1,14 +1,13 @@
 package com.nznext.geargrove.products.entities;
 
-import com.nznext.geargrove.products.enums.BusBitDepth;
+import com.nznext.geargrove.products.enums.graphcards.BusBitDepth;
+import com.nznext.geargrove.products.enums.graphcards.ConnectionInterface;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -27,9 +26,9 @@ public class GraphicCardEntity extends Product {
     @Column(name = "take_up_slots", nullable = false)
     private int takeUpSlots;
 
-    @ElementCollection
+    @Enumerated(EnumType.STRING)
     @Column(name = "connection_interface", nullable = false)
-    private List<String> connectionInterface = Arrays.asList("PCI v3.0", "PCI v4.0");
+    private ConnectionInterface connectionInterface;
 
     @Column(name = "number_of_monitors", nullable = false)
     private int numberOfMonitors;

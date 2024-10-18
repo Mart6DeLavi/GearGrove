@@ -1,4 +1,4 @@
-package com.nznext.geargrove.products.enums;
+package com.nznext.geargrove.products.enums.graphcards;
 
 import lombok.Getter;
 

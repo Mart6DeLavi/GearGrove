@@ -9,11 +9,5 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface MotherBoardRepository extends JpaRepository<MotherBoardEntity, Long> {
-
-    @Query("SELECT product FROM MotherBoardEntity product WHERE product.productName = :productName")
-    Optional<MotherBoardEntity> findProductByProductName(@Param("productName") String productName);
-
-    @Query("SELECT COALESCE(SUM(product.quantity), 0) FROM MotherBoardEntity product WHERE product.productName = :productName")
-    Integer quantityByProductName(@Param("productName") String productName);
+public interface MotherBoardRepository extends ProductRepository<MotherBoardEntity> {
 }

@@ -1,5 +1,6 @@
 package com.nznext.geargrove.products.entities;
 
+import com.nznext.geargrove.products.enums.harddrive.ClipBoardSize;
 import com.nznext.geargrove.products.enums.harddrive.Connections;
 import com.nznext.geargrove.products.enums.harddrive.FormFactors;
 import com.nznext.geargrove.products.enums.harddrive.Types;
@@ -38,7 +39,7 @@ public class HardwareEntity extends Product{
 
     @Enumerated(EnumType.STRING)
     @Column(name = "clip_board_size", nullable = false)
-    private int clipboardSize;
+    private ClipBoardSize clipboardSize;
 
     @Override
     public final boolean equals(Object object) {
