@@ -3,6 +3,7 @@ package com.nznext.geargrove.products.service;
 import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
 import com.nznext.geargrove.products.entities.GraphicCardEntity;
 import com.nznext.geargrove.products.exception.NoSuchProductException;
+import com.nznext.geargrove.products.exception.ProductAlreadyExistException;
 import com.nznext.geargrove.products.exception.SoldOutException;
 import com.nznext.geargrove.products.repositories.GraphicCardRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,14 @@ public class GraphicCardService {
     private final GraphicCardRepository graphicCardRepository;
 
     public GraphicCardEntity createNewProduct(GraphicCardEntity product) {
-        log.info("Created product: {} successfully", product.getProductName());
-        return graphicCardRepository.save(product);
+        var found = graphicCardRepository.findProductByProductName(product.getProductName());
+
+        if (found.isPresent()) {
+            log.info("Created product: {} successfully", product.getProductName());
+            return graphicCardRepository.save(product);
+        } else {
+            throw new ProductAlreadyExistException("Such product already exists");
+        }
     }
 
     @Async

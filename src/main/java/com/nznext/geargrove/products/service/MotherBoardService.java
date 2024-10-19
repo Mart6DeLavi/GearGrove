@@ -3,6 +3,7 @@ package com.nznext.geargrove.products.service;
 import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
 import com.nznext.geargrove.products.entities.MotherBoardEntity;
 import com.nznext.geargrove.products.exception.NoSuchProductException;
+import com.nznext.geargrove.products.exception.ProductAlreadyExistException;
 import com.nznext.geargrove.products.exception.SoldOutException;
 import com.nznext.geargrove.products.repositories.MotherBoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,14 @@ public class MotherBoardService {
     private final MotherBoardRepository motherBoardRepository;
 
     public MotherBoardEntity createNewProduct(MotherBoardEntity product) {
-        log.info("Created product: {} successfully", product.getProductName());
-        return motherBoardRepository.save(product);
+        var found = motherBoardRepository.findProductByProductName(product.getProductName());
+
+        if (found.isPresent()) {
+            log.info("Created product: {} successfully", product.getProductName());
+            return motherBoardRepository.save(product);
+        } else {
+            throw new ProductAlreadyExistException("Such product already exists");
+        }
     }
 
     @Async

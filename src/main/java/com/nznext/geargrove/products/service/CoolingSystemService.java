@@ -20,8 +20,14 @@ public class CoolingSystemService {
     private final CoolingSystemRepository coolingSystemRepository;
 
     public CoolingSystemEntity createNewProduct(CoolingSystemEntity product) {
-        log.info("Created product: {} successfully", product.getProductName());
-        return coolingSystemRepository.save(product);
+        var found = coolingSystemRepository.findProductByProductName(product.getProductName());
+
+        if (found.isPresent()) {
+            log.info("Created product: {} successfully", product.getProductName());
+            return coolingSystemRepository.save(product);
+        } else {
+            throw new NoSuchProductException("Such product already exists");
+        }
     }
 
     @Async

@@ -4,6 +4,7 @@ package com.nznext.geargrove.products.service;
 import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
 import com.nznext.geargrove.products.entities.HardwareEntity;
 import com.nznext.geargrove.products.exception.NoSuchProductException;
+import com.nznext.geargrove.products.exception.ProductAlreadyExistException;
 import com.nznext.geargrove.products.exception.SoldOutException;
 import com.nznext.geargrove.products.repositories.HardwareRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,14 @@ public class HardwareService {
     private final HardwareRepository hardwareRepository;
 
     public HardwareEntity createNewProduct(HardwareEntity product) {
-        log.info("Created product: {} successfully", product.getProductName());
-        return hardwareRepository.save(product);
+        var found = hardwareRepository.findProductByProductName(product.getProductName());
+
+        if (found.isPresent()) {
+            log.info("Created product: {} successfully", product.getProductName());
+            return hardwareRepository.save(product);
+        } else {
+            throw new ProductAlreadyExistException("Such product already exists");
+        }
     }
 
     @Async

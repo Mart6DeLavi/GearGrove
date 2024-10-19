@@ -3,6 +3,7 @@ package com.nznext.geargrove.products.service;
 import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
 import com.nznext.geargrove.products.entities.CPUEntity;
 import com.nznext.geargrove.products.exception.NoSuchProductException;
+import com.nznext.geargrove.products.exception.ProductAlreadyExistException;
 import com.nznext.geargrove.products.exception.SoldOutException;
 import com.nznext.geargrove.products.repositories.CpuRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,14 @@ public class CpuService {
     private final CpuRepository cpuRepository;
 
     public CPUEntity createNewProduct(CPUEntity product) {
-        log.info("Created product: {} successfully", product.getProductName());
-        return cpuRepository.save(product);
+        var found = cpuRepository.findProductByProductName(product.getProductName());
+
+        if (found.isPresent()) {
+            log.info("Created product: {} successfully", product.getProductName());
+            return cpuRepository.save(product);
+        } else {
+            throw new ProductAlreadyExistException("Such product already exists");
+        }
     }
 
     @Async

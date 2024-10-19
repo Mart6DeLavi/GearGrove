@@ -3,6 +3,7 @@ package com.nznext.geargrove.products.service;
 import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
 import com.nznext.geargrove.products.entities.HouseEntity;
 import com.nznext.geargrove.products.exception.NoSuchProductException;
+import com.nznext.geargrove.products.exception.ProductAlreadyExistException;
 import com.nznext.geargrove.products.exception.SoldOutException;
 import com.nznext.geargrove.products.repositories.HouseRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,14 @@ public class HouseService {
     private final HouseRepository houseRepository;
 
     public HouseEntity createNewProduct(HouseEntity product) {
-        log.info("Created product: {} successfully", product.getProductName());
-        return houseRepository.save(product);
+        var found = houseRepository.findProductByProductName(product.getProductName());
+
+        if (found.isEmpty()) {
+            log.info("Created product: {} successfully", product.getProductName());
+            return houseRepository.save(product);
+        } else {
+            throw new ProductAlreadyExistException("Such product already exists");
+        }
     }
 
     @Async

@@ -3,6 +3,7 @@ package com.nznext.geargrove.products.service;
 import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
 import com.nznext.geargrove.products.entities.PowerUnitEntity;
 import com.nznext.geargrove.products.exception.NoSuchProductException;
+import com.nznext.geargrove.products.exception.ProductAlreadyExistException;
 import com.nznext.geargrove.products.exception.SoldOutException;
 import com.nznext.geargrove.products.repositories.PowerUnitRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,14 @@ public class PowerUnitService {
     private final PowerUnitRepository powerUnitRepository;
 
     public PowerUnitEntity createNewProduct(PowerUnitEntity product) {
-        log.info("Created product: {} successfully", product.getProductName());
-        return powerUnitRepository.save(product);
+        var found = powerUnitRepository.findProductByProductName(product.getProductName());
+
+        if (found.isPresent()) {
+            log.info("Created product: {} successfully", product.getProductName());
+            return powerUnitRepository.save(product);
+        } else {
+            throw new ProductAlreadyExistException("Such product already exists");
+        }
     }
 
     @Async
