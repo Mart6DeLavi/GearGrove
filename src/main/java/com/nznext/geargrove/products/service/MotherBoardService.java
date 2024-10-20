@@ -68,7 +68,13 @@ public class MotherBoardService {
     }
 
     public void deleteProduct(Integer productId) {
-        motherBoardRepository.deleteById(productId);
-        log.info("Deleted product: {}", productId);
+        var found = motherBoardRepository.findProductByProductId(productId);
+
+        if (found.isPresent()) {
+            motherBoardRepository.deleteById(productId);
+            log.info("Deleted product: {}", productId);
+        } else {
+            throw new NoSuchProductException("Such product does not exist");
+        }
     }
 }

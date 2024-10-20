@@ -68,7 +68,13 @@ public class CpuService {
     }
 
     public void deleteProduct(Integer productId) {
-        cpuRepository.deleteById(productId);
-        log.info("Deleted product: {}", productId);
+        var found = cpuRepository.findProductByProductId(productId);
+
+        if (found.isPresent()) {
+            cpuRepository.deleteById(productId);
+            log.info("Deleted product: {}", productId);
+        } else {
+            throw new NoSuchProductException("Such product does not exist");
+        }
     }
 }

@@ -68,7 +68,13 @@ public class PowerUnitService {
     }
 
     public void deleteProduct(Integer productId) {
-        powerUnitRepository.deleteById(productId);
-        log.info("Deleted product: {}", productId);
+        var found = powerUnitRepository.findProductByProductId(productId);
+
+        if (found.isPresent()) {
+            powerUnitRepository.deleteById(productId);
+            log.info("Deleted product: {}", productId);
+        } else {
+            throw new NoSuchProductException("Such product does not exist");
+        }
     }
 }

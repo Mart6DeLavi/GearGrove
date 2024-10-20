@@ -69,7 +69,13 @@ public class RamService {
     }
 
     public void deleteProduct(Integer productId) {
-        ramRepository.deleteById(productId);
-        log.info("Deleted product: {}", productId);
+        var found = ramRepository.findProductByProductId(productId);
+
+        if (found.isPresent()) {
+            ramRepository.deleteById(productId);
+            log.info("Deleted product: {}", productId);
+        } else {
+            throw new NoSuchProductException("Such product does not exist");
+        }
     }
 }

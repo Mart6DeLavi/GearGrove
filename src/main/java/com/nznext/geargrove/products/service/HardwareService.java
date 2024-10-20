@@ -69,7 +69,13 @@ public class HardwareService {
     }
 
     public void deleteProduct(Integer productId) {
-        hardwareRepository.deleteById(productId);
-        log.info("Deleted product: {}", productId);
+        var found = hardwareRepository.findProductByProductId(productId);
+
+        if (found.isPresent()) {
+            hardwareRepository.deleteById(productId);
+            log.info("Deleted product: {}", productId);
+        } else {
+            throw new NoSuchProductException("Such product does not exist");
+        }
     }
 }

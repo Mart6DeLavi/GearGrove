@@ -68,7 +68,13 @@ public class SSDService {
     }
 
     public void deleteProduct(Integer productId) {
-        ssdRepository.deleteById(productId);
-        log.info("Deleted product: {}", productId);
+        var found = ssdRepository.findProductByProductId(productId);
+
+        if (found.isPresent()) {
+            ssdRepository.deleteById(productId);
+            log.info("Deleted product: {}", productId);
+        } else {
+            throw new NoSuchProductException("Such product does not exist");
+        }
     }
 }

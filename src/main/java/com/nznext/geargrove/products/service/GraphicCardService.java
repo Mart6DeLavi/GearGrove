@@ -68,7 +68,13 @@ public class GraphicCardService {
     }
 
     public void deleteProduct(Integer productId) {
-        graphicCardRepository.deleteById(productId);
-        log.info("Deleted product: {}", productId);
+        var found = graphicCardRepository.findProductByProductId(productId);
+
+        if (found.isPresent()) {
+            graphicCardRepository.deleteById(productId);
+            log.info("Deleted product: {}", productId);
+        } else {
+            throw new NoSuchProductException("Such product does not exist");
+        }
     }
 }

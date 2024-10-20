@@ -66,7 +66,13 @@ public class CoolingSystemService {
     }
 
     public void deleteProduct(Integer productId) {
-        coolingSystemRepository.deleteById(productId);
-        log.info("Deleted product: {}", productId);
+        var found = coolingSystemRepository.findProductByProductId(productId);
+
+        if (found.isPresent()) {
+            coolingSystemRepository.deleteById(productId);
+            log.info("Deleted product: {}", productId);
+        } else {
+            throw new NoSuchProductException("Such product does not exist");
+        }
     }
 }

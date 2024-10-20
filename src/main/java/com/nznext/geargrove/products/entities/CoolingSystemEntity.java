@@ -18,8 +18,6 @@ import java.util.Objects;
 @Table(name = "cooling_systems")
 public class CoolingSystemEntity extends Product {
 
-
-
     @Enumerated(EnumType.STRING)
     @Column(name = "purpose", nullable = false)
     private Purposes purpose;

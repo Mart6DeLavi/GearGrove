@@ -68,7 +68,13 @@ public class HouseService {
     }
 
     public void deleteProduct(Integer productId) {
-        houseRepository.deleteById(productId);
-        log.info("Deleted product: {}", productId);
+        var found = houseRepository.findProductByProductId(productId);
+
+        if (found.isPresent()) {
+            houseRepository.deleteById(productId);
+            log.info("Deleted product: {}", productId);
+        } else {
+            throw new NoSuchProductException("Such product does not exist");
+        }
     }
 }
