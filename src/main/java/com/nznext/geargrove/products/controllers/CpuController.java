@@ -2,7 +2,6 @@ package com.nznext.geargrove.products.controllers;
 
 import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
 import com.nznext.geargrove.products.entities.CPUEntity;
-import com.nznext.geargrove.products.entities.CoolingSystemEntity;
 import com.nznext.geargrove.products.service.CpuService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +13,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @RestController
+@Deprecated
 @RequestMapping("/products/cpus")
 @RequiredArgsConstructor
 public class CpuController {

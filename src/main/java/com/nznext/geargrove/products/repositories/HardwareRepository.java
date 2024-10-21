@@ -1,6 +1,5 @@
 package com.nznext.geargrove.products.repositories;
 
-import com.nznext.geargrove.products.entities.CoolingSystemEntity;
 import com.nznext.geargrove.products.entities.GraphicCardEntity;
 import com.nznext.geargrove.products.entities.HardwareEntity;
 import org.springframework.data.jpa.repository.Query;

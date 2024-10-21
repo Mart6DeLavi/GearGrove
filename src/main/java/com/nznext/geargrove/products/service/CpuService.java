@@ -16,6 +16,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Service
+@Deprecated
 @RequiredArgsConstructor
 public class CpuService {
 

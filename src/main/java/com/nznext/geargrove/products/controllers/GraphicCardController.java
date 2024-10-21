@@ -1,14 +1,12 @@
 package com.nznext.geargrove.products.controllers;
 
 import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
-import com.nznext.geargrove.products.entities.CoolingSystemEntity;
 import com.nznext.geargrove.products.entities.GraphicCardEntity;
 import com.nznext.geargrove.products.service.GraphicCardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.CompletableFuture;

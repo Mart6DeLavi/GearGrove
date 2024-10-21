@@ -2,13 +2,11 @@ package com.nznext.geargrove.products.entities;
 
 import com.nznext.geargrove.products.enums.motherboard.*;
 import jakarta.persistence.*;
-import jdk.jfr.Frequency;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.net.Socket;
 import java.util.Objects;
 
 @Entity
