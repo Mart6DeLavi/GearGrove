@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
             <nav className="container mx-auto px-6 py-4">
                 <div className="flex justify-between items-center">
                     <Link to="/" className="text-2xl font-bold">
-                        TechPartsHub
+                        GearGrove
                     </Link>
                     <div className="flex space-x-6">
                         <NavLink to="/" current={location.pathname}>Home</NavLink>

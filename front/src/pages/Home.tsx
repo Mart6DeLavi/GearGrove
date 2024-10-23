@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom';
 import styles from './Home.module.css';
 
 const featuredProducts = [
-    { id: 1, name: 'RTX 3080 Graphics Card', price: 699.99, image: '/placeholder.svg?height=200&width=300' },
-    { id: 2, name: 'Ryzen 9 5950X Processor', price: 749.99, image: '/placeholder.svg?height=200&width=300' },
-    { id: 3, name: '32GB DDR4 RAM Kit', price: 159.99, image: '/placeholder.svg?height=200&width=300' },
-    { id: 4, name: '1TB NVMe SSD', price: 129.99, image: '/placeholder.svg?height=200&width=300' },
+    { id: 1, name: 'RTX 3080 Graphics Card', price: 699.99, image: '/products/3080.png' },
+    { id: 2, name: 'Ryzen 9 5950X Processor', price: 749.99, image: '/products/r9-5950x.png' },
+    { id: 3, name: '32GB DDR4 RAM Kit', price: 159.99, image: '/products/ram.png' },
+    { id: 4, name: '1TB NVMe SSD', price: 129.99, image: '/products/ssd.png' },
 ];
 
 const Home: React.FC = () => {
     return (
         <div className={styles.container}>
             <section className={styles.hero}>
-                <h1 className={styles.heroTitle}>Welcome to TechPartsHub</h1>
+                <h1 className={styles.heroTitle}>Welcome to GearGrove</h1>
                 <p className={styles.heroSubtitle}>Your one-stop shop for premium computer parts</p>
             </section>
 

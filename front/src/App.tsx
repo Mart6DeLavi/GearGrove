@@ -23,7 +23,7 @@ const App: React.FC = () => {
                 </main>
                 <footer className="bg-gray-800 text-white">
                     <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-                        <p>&copy; 2023 TechPartsHub. All rights reserved.</p>
+                        <p>&copy; 2023 GearGrove. All rights reserved.</p>
                         <div className="flex space-x-4">
                             <a href="#" className="hover:text-gray-300">Terms</a>
                             <a href="#" className="hover:text-gray-300">Privacy</a>

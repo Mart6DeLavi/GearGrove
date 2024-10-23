@@ -27,19 +27,24 @@
 }
 
 .productCard {
-    @apply bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105;
+    @apply bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 flex flex-col; /* Flex-контейнер */
+    height: 400px; /* Фиксированная высота */
 }
 
 .productImage {
-    @apply w-full h-48 object-cover;
+    @apply w-full h-auto object-contain; /* Сохранение пропорций */
+    max-width: 100%;
+    max-height: 200px; /* Максимальная высота изображения */
+    margin: 0 auto;
 }
 
 .productInfo {
-    @apply p-4;
+    @apply p-4 flex-grow flex flex-col; /* Flex для вертикального выравнивания */
 }
 
 .productName {
     @apply text-lg font-semibold mb-2;
+    flex-grow: 1; /* Убедитесь, что название занимает пространство */
 }
 
 .productPrice {
@@ -48,6 +53,7 @@
 
 .viewDetailsButton {
     @apply block text-center bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-300;
+    margin-top: auto; /* Поднять кнопку внизу карточки */
 }
 
 .ctaSection {
