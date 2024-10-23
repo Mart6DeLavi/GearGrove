@@ -35,10 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-
-/front/node_modules
-
-/front
-
-/node_modules
