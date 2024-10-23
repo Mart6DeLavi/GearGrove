@@ -1,0 +1,55 @@
+.container {
+    @apply bg-white shadow-md rounded-lg overflow-hidden;
+}
+
+.header {
+    @apply bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-6;
+}
+
+.name {
+    @apply text-3xl font-bold mb-2;
+}
+
+.title {
+    @apply text-lg;
+}
+
+.content {
+    @apply p-6;
+}
+
+.section {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+}
+
+.sectionTitle {
+    @apply text-2xl font-semibold mb-4;
+}
+
+.infoList {
+    @apply space-y-3;
+}
+
+.infoItem {
+    @apply flex;
+}
+
+.infoLabel {
+    @apply font-semibold text-gray-600 mr-2;
+}
+
+.activitySection {
+    @apply mt-8;
+}
+
+.activityList {
+    @apply space-y-2;
+}
+
+.activityItem {
+    @apply flex items-center;
+}
+
+.activityDate {
+    @apply text-sm text-gray-500 w-24;
+}

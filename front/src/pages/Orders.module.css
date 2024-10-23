@@ -1,0 +1,71 @@
+.container {
+    @apply space-y-8;
+}
+
+.title {
+    @apply text-3xl font-bold mb-6;
+}
+
+.orderCard {
+    @apply bg-white rounded-lg shadow-md overflow-hidden;
+}
+
+.orderHeader {
+    @apply bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-4 flex justify-between items-center;
+}
+
+.orderInfo {
+    @apply space-y-1;
+}
+
+.orderId {
+    @apply text-xl font-semibold;
+}
+
+.orderDate {
+    @apply text-sm;
+}
+
+.orderTotal {
+    @apply text-lg font-semibold;
+}
+
+.orderStatus {
+    @apply text-sm;
+}
+
+.orderContent {
+    @apply p-4;
+}
+
+.orderTable {
+    @apply w-full;
+}
+
+.tableHeader {
+    @apply border-b;
+}
+
+.tableHeaderCell {
+    @apply text-left pb-2;
+}
+
+.tableRow {
+    @apply border-b last:border-b-0;
+}
+
+.tableCell {
+    @apply py-2;
+}
+
+.statusProcessing {
+    @apply text-yellow-300;
+}
+
+.statusShipped {
+    @apply text-blue-300;
+}
+
+.statusDelivered {
+    @apply text-green-300;
+}

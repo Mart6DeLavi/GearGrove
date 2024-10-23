@@ -1,0 +1,63 @@
+.container {
+    @apply space-y-12;
+}
+
+.hero {
+    @apply text-center;
+}
+
+.heroTitle {
+    @apply text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600;
+}
+
+.heroSubtitle {
+    @apply text-xl mb-8 text-gray-600;
+}
+
+.featuredSection {
+    @apply space-y-6;
+}
+
+.featuredTitle {
+    @apply text-3xl font-semibold mb-6;
+}
+
+.productGrid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8;
+}
+
+.productCard {
+    @apply bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105;
+}
+
+.productImage {
+    @apply w-full h-48 object-cover;
+}
+
+.productInfo {
+    @apply p-4;
+}
+
+.productName {
+    @apply text-lg font-semibold mb-2;
+}
+
+.productPrice {
+    @apply text-gray-600 mb-4;
+}
+
+.viewDetailsButton {
+    @apply block text-center bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-300;
+}
+
+.ctaSection {
+    @apply bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-12 rounded-lg text-center;
+}
+
+.ctaTitle {
+    @apply text-3xl font-semibold mb-4;
+}
+
+.ctaButton {
+    @apply bg-white text-indigo-600 px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition duration-300;
+}
