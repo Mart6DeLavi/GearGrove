@@ -1,6 +1,6 @@
 package com.nznext.geargrove.products.controllers;
 
-import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
+import com.nznext.geargrove.products.dtos.RamInformationDto;
 import com.nznext.geargrove.products.entities.RamEntity;
 import com.nznext.geargrove.products.service.RamService;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +24,11 @@ public class RamController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ramService.createNewProduct(coolingSystemEntity));
     }
 
-    @GetMapping("/info/{productName}")
-    public CompletableFuture<ResponseEntity<FindProductByproductNameInformationDto>> findProduct(
-            @PathVariable String productName
+    @GetMapping("/info/{productId}")
+    public CompletableFuture<ResponseEntity<RamInformationDto>> findProduct(
+            @PathVariable Integer productId
     ) {
-        return ramService.findProductByProductName(productName)
+        return ramService.findProductByProductId(productId)
                 .thenApply(optionalProduct -> optionalProduct
                         .map(ResponseEntity::ok)
                         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()));

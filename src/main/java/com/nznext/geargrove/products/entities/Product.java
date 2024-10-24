@@ -8,10 +8,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-public class Product {
+public abstract class Product {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "product_name", nullable = false)

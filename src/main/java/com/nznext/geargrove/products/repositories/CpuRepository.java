@@ -11,4 +11,7 @@ import java.util.Optional;
 public interface CpuRepository extends ProductRepository<CPUEntity> {
     @Query("SELECT product FROM CPUEntity product WHERE product.id = :productId")
     Optional<CPUEntity> findProductByProductId(@Param("productId") Integer productId);
+
+    @Query("SELECT COALESCE(SUM(product.quantity), 0) FROM #{#entityName} product WHERE product.id = :productId")
+    Integer quantityByProductId(@Param("productId") Integer productId);
 }

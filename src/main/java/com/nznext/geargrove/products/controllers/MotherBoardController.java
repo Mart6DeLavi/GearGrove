@@ -1,6 +1,6 @@
 package com.nznext.geargrove.products.controllers;
 
-import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
+import com.nznext.geargrove.products.dtos.MotherBoardInformationDto;
 import com.nznext.geargrove.products.entities.MotherBoardEntity;
 import com.nznext.geargrove.products.service.MotherBoardService;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +24,11 @@ public class MotherBoardController {
         return ResponseEntity.status(HttpStatus.CREATED).body(motherBoardService.createNewProduct(coolingSystemEntity));
     }
 
-    @GetMapping("/info/{productName}")
-    public CompletableFuture<ResponseEntity<FindProductByproductNameInformationDto>> findProduct(
-            @PathVariable String productName
+    @GetMapping("/info/{productId}")
+    public CompletableFuture<ResponseEntity<MotherBoardInformationDto>> findProduct(
+            @PathVariable Integer productId
     ) {
-        return motherBoardService.findProductByProductName(productName)
+        return motherBoardService.findProductByProductId(productId)
                 .thenApply(optionalProduct -> optionalProduct
                         .map(ResponseEntity::ok)
                         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()));

@@ -1,6 +1,6 @@
 package com.nznext.geargrove.products.service;
 
-import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
+import com.nznext.geargrove.products.dtos.HouseInformationDto;
 import com.nznext.geargrove.products.entities.HouseEntity;
 import com.nznext.geargrove.products.exception.NoSuchProductException;
 import com.nznext.geargrove.products.exception.ProductAlreadyExistException;
@@ -33,20 +33,29 @@ public class HouseService {
     }
 
     @Async
-    public CompletableFuture<Optional<FindProductByproductNameInformationDto>> findProductByProductName(String productName) {
+    public CompletableFuture<Optional<HouseInformationDto>> findProductByProductId(Integer id) {
         return CompletableFuture.supplyAsync(() -> {
-            var quantity = houseRepository.quantityByProductName(productName);
+            var quantity = houseRepository.quantityByProductId(id);
             if (quantity == 0) {
                 throw new SoldOutException("This product is sold out. Sorry😢");
             }
-            return houseRepository.findProductByProductName(productName)
-                    .map(product -> new FindProductByproductNameInformationDto(
+            return houseRepository.findProductByProductId(id)
+                    .map(product -> new HouseInformationDto(
                             product.getProductName(),
+                            product.getDescription(),
                             product.getPrice(),
-                            product.getDescription()
+                            product.getQuantity(),
+                            product.getSupplier(),
+                            product.getYear(),
+                            product.getFormFactor(),
+                            product.getMotherBoardType(),
+                            product.getHousingPlacement(),
+                            product.isPowerUnit(),
+                            product.getAdditionalFunctions(),
+                            product.getDustFilter()
                     ))
                     .or(() -> {
-                        throw new NoSuchProductException("No such product: " + productName);
+                        throw new NoSuchProductException("No such product: " + id);
                     });
         });
     }

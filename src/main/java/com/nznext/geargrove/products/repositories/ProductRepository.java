@@ -16,6 +16,6 @@ public interface ProductRepository<T extends Product> extends JpaRepository<T, I
     Optional<T> findProductByProductName(@Param("productName") String productName);
 
     @Query("SELECT COALESCE(SUM(product.quantity), 0) FROM #{#entityName} product WHERE product.productName = :productName")
-    Integer quantityByProductName(@Param("productName") String productName);
+    Integer quantityByProductId(@Param("productName") String productName);
 }
 

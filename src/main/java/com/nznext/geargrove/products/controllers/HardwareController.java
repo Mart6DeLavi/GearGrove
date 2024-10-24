@@ -1,6 +1,6 @@
 package com.nznext.geargrove.products.controllers;
 
-import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
+import com.nznext.geargrove.products.dtos.HardwareInformationDto;
 import com.nznext.geargrove.products.entities.HardwareEntity;
 import com.nznext.geargrove.products.service.HardwareService;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +24,11 @@ public class HardwareController {
         return ResponseEntity.status(HttpStatus.CREATED).body(hardwareService.createNewProduct(coolingSystemEntity));
     }
 
-    @GetMapping("/info/{productName}")
-    public CompletableFuture<ResponseEntity<FindProductByproductNameInformationDto>> findProduct(
-            @PathVariable String productName
+    @GetMapping("/info/{productId}")
+    public CompletableFuture<ResponseEntity<HardwareInformationDto>> findProduct(
+            @PathVariable Integer productId
     ) {
-        return hardwareService.findProductByProductName(productName)
+        return hardwareService.findProductByProductId(productId)
                 .thenApply(optionalProduct -> optionalProduct
                         .map(ResponseEntity::ok)
                         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()));

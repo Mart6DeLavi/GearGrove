@@ -1,6 +1,6 @@
 package com.nznext.geargrove.products.controllers;
 
-import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
+import com.nznext.geargrove.products.dtos.CpuInformationDto;
 import com.nznext.geargrove.products.entities.CPUEntity;
 import com.nznext.geargrove.products.service.CpuService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,6 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @RestController
-@Deprecated
 @RequestMapping("/products/cpus")
 @RequiredArgsConstructor
 public class CpuController {
@@ -21,15 +20,15 @@ public class CpuController {
     private final CpuService cpuService;
 
     @PostMapping("/create")
-    public ResponseEntity<CPUEntity> createNewProduct(@RequestBody CPUEntity coolingSystemEntity) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(cpuService.createNewProduct(coolingSystemEntity));
+    public ResponseEntity<CPUEntity> createNewProduct(@RequestBody CPUEntity cpuEntity) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(cpuService.createNewProduct(cpuEntity));
     }
 
-    @GetMapping("/info/{productName}")
-    public CompletableFuture<ResponseEntity<FindProductByproductNameInformationDto>> findProduct(
-            @PathVariable String productName
+    @GetMapping("/info/{productId}")
+    public CompletableFuture<ResponseEntity<CpuInformationDto>> findProduct(
+            @PathVariable Integer productId
     ) {
-        return cpuService.findProductByProductName(productName)
+        return cpuService.findProductByProductId(productId)
                 .thenApply(optionalProduct -> optionalProduct
                         .map(ResponseEntity::ok)
                         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()));

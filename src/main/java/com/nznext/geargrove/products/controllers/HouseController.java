@@ -1,6 +1,6 @@
 package com.nznext.geargrove.products.controllers;
 
-import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
+import com.nznext.geargrove.products.dtos.HouseInformationDto;
 import com.nznext.geargrove.products.entities.HouseEntity;
 import com.nznext.geargrove.products.service.HouseService;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +24,11 @@ public class HouseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(houseService.createNewProduct(coolingSystemEntity));
     }
 
-    @GetMapping("/info/{productName}")
-    public CompletableFuture<ResponseEntity<FindProductByproductNameInformationDto>> findProduct(
-            @PathVariable String productName
+    @GetMapping("/info/{productId}")
+    public CompletableFuture<ResponseEntity<HouseInformationDto>> findProduct(
+            @PathVariable Integer productId
     ) {
-        return houseService.findProductByProductName(productName)
+        return houseService.findProductByProductId(productId)
                 .thenApply(optionalProduct -> optionalProduct
                         .map(ResponseEntity::ok)
                         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()));

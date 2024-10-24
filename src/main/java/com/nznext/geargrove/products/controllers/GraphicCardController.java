@@ -1,6 +1,6 @@
 package com.nznext.geargrove.products.controllers;
 
-import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
+import com.nznext.geargrove.products.dtos.GraphicCardInformationDto;
 import com.nznext.geargrove.products.entities.GraphicCardEntity;
 import com.nznext.geargrove.products.service.GraphicCardService;
 import lombok.RequiredArgsConstructor;
@@ -13,22 +13,22 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @RestController
-@RequestMapping("/products/grapcards")
+@RequestMapping("/products/graph-cards")
 @RequiredArgsConstructor
 public class GraphicCardController {
 
     private final GraphicCardService graphicCardService;
 
     @PostMapping("/create")
-    public ResponseEntity<GraphicCardEntity> createNewProduct(@RequestBody GraphicCardEntity coolingSystemEntity) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(graphicCardService.createNewProduct(coolingSystemEntity));
+    public ResponseEntity<GraphicCardEntity> createNewProduct(@RequestBody GraphicCardEntity graphicCardEntity) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(graphicCardService.createNewProduct(graphicCardEntity));
     }
 
-    @GetMapping("/info/{productName}")
-    public CompletableFuture<ResponseEntity<FindProductByproductNameInformationDto>> findProduct(
-            @PathVariable String productName
+    @GetMapping("/info/{productId}")
+    public CompletableFuture<ResponseEntity<GraphicCardInformationDto>> findProduct(
+            @PathVariable Integer productId
     ) {
-        return graphicCardService.findProductByProductName(productName)
+        return graphicCardService.findProductByProductId(productId)
                 .thenApply(optionalProduct -> optionalProduct
                         .map(ResponseEntity::ok)
                         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()));

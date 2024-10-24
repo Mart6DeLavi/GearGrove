@@ -27,7 +27,7 @@ public class SSDEntity extends Product{
 
     @Enumerated(EnumType.STRING)
     @Column(name = "interface", nullable = false)
-    private Interface interface_;
+    private Interface anInterface;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "memory_type", nullable = false)

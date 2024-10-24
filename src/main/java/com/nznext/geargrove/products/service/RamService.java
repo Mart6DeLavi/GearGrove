@@ -1,6 +1,6 @@
 package com.nznext.geargrove.products.service;
 
-import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
+import com.nznext.geargrove.products.dtos.RamInformationDto;
 import com.nznext.geargrove.products.entities.RamEntity;
 import com.nznext.geargrove.products.exception.NoSuchProductException;
 import com.nznext.geargrove.products.exception.ProductAlreadyExistException;
@@ -25,7 +25,7 @@ public class RamService {
     public RamEntity createNewProduct(RamEntity product) {
         var found = ramRepository.findProductByProductName(product.getProductName());
 
-        if (found.isPresent()) {
+        if (found.isEmpty()) {
             log.info("Created product: {} successfully", product.getProductName());
             return ramRepository.save(product);
         } else {
@@ -34,20 +34,28 @@ public class RamService {
     }
 
     @Async
-    public CompletableFuture<Optional<FindProductByproductNameInformationDto>> findProductByProductName(String productName) {
+    public CompletableFuture<Optional<RamInformationDto>> findProductByProductId(Integer id) {
         return CompletableFuture.supplyAsync(() -> {
-            var quantity = ramRepository.quantityByProductName(productName);
+            var quantity = ramRepository.quantityByProductId(id);
             if (quantity == 0) {
                 throw new SoldOutException("This product is sold out. Sorry😢");
             }
-            return ramRepository.findProductByProductName(productName)
-                    .map(product -> new FindProductByproductNameInformationDto(
+            return ramRepository.findProductByProductId(id)
+                    .map(product -> new RamInformationDto(
                             product.getProductName(),
+                            product.getDescription(),
                             product.getPrice(),
-                            product.getDescription()
+                            product.getQuantity(),
+                            product.getSupplier(),
+                            product.getYear(),
+                            product.getMemoryCapacity(),
+                            product.getType(),
+                            product.getClockSpeed(),
+                            product.getCasLatency(),
+                            product.getOperatingVoltage()
                     ))
                     .or(() -> {
-                        throw new NoSuchProductException("No such product: " + productName);
+                        throw new NoSuchProductException("No such product: " + id);
                     });
         });
     }

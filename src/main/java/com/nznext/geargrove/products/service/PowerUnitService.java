@@ -1,6 +1,6 @@
 package com.nznext.geargrove.products.service;
 
-import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
+import com.nznext.geargrove.products.dtos.PowerUnitInformationDto;
 import com.nznext.geargrove.products.entities.PowerUnitEntity;
 import com.nznext.geargrove.products.exception.NoSuchProductException;
 import com.nznext.geargrove.products.exception.ProductAlreadyExistException;
@@ -24,7 +24,7 @@ public class PowerUnitService {
     public PowerUnitEntity createNewProduct(PowerUnitEntity product) {
         var found = powerUnitRepository.findProductByProductName(product.getProductName());
 
-        if (found.isPresent()) {
+        if (found.isEmpty()) {
             log.info("Created product: {} successfully", product.getProductName());
             return powerUnitRepository.save(product);
         } else {
@@ -33,20 +33,29 @@ public class PowerUnitService {
     }
 
     @Async
-    public CompletableFuture<Optional<FindProductByproductNameInformationDto>> findProductByProductName(String productName) {
+    public CompletableFuture<Optional<PowerUnitInformationDto>> findProductByProductId(Integer id) {
         return CompletableFuture.supplyAsync(() -> {
-            var quantity = powerUnitRepository.quantityByProductName(productName);
+            var quantity = powerUnitRepository.quantityByProductId(id);
             if (quantity == 0) {
                 throw new SoldOutException("This product is sold out. Sorry😢");
             }
-            return powerUnitRepository.findProductByProductName(productName)
-                    .map(product -> new FindProductByproductNameInformationDto(
+            return powerUnitRepository.findProductByProductId(id)
+                    .map(product -> new PowerUnitInformationDto(
                             product.getProductName(),
+                            product.getDescription(),
                             product.getPrice(),
-                            product.getDescription()
+                            product.getQuantity(),
+                            product.getSupplier(),
+                            product.getYear(),
+                            product.getPower(),
+                            product.getFormFactors(),
+                            product.getCertificate(),
+                            product.getCabellSystem(),
+                            product.getFanDiameter(),
+                            product.getWarranty()
                     ))
                     .or(() -> {
-                        throw new NoSuchProductException("No such product: " + productName);
+                        throw new NoSuchProductException("No such product: " + id);
                     });
         });
     }

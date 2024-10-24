@@ -1,6 +1,6 @@
 package com.nznext.geargrove.products.controllers;
 
-import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
+import com.nznext.geargrove.products.dtos.PowerUnitInformationDto;
 import com.nznext.geargrove.products.entities.PowerUnitEntity;
 import com.nznext.geargrove.products.service.PowerUnitService;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +24,11 @@ public class PowerUnitController {
         return ResponseEntity.status(HttpStatus.CREATED).body(powerUnitService.createNewProduct(coolingSystemEntity));
     }
 
-    @GetMapping("/info/{productName}")
-    public CompletableFuture<ResponseEntity<FindProductByproductNameInformationDto>> findProduct(
-            @PathVariable String productName
+    @GetMapping("/info/{productId}")
+    public CompletableFuture<ResponseEntity<PowerUnitInformationDto>> findProduct(
+            @PathVariable Integer productId
     ) {
-        return powerUnitService.findProductByProductName(productName)
+        return powerUnitService.findProductByProductId(productId)
                 .thenApply(optionalProduct -> optionalProduct
                         .map(ResponseEntity::ok)
                         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()));

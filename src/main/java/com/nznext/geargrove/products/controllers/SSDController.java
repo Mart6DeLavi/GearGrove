@@ -1,6 +1,6 @@
 package com.nznext.geargrove.products.controllers;
 
-import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
+import com.nznext.geargrove.products.dtos.SSDInformationDto;
 import com.nznext.geargrove.products.entities.SSDEntity;
 import com.nznext.geargrove.products.service.SSDService;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +24,11 @@ public class SSDController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ssdService.createNewProduct(coolingSystemEntity));
     }
 
-    @GetMapping("/info/{productName}")
-    public CompletableFuture<ResponseEntity<FindProductByproductNameInformationDto>> findProduct(
-            @PathVariable String productName
+    @GetMapping("/info/{productId}")
+    public CompletableFuture<ResponseEntity<SSDInformationDto>> findProduct(
+            @PathVariable Integer productId
     ) {
-        return ssdService.findProductByProductName(productName)
+        return ssdService.findProductByProductId(productId)
                 .thenApply(optionalProduct -> optionalProduct
                         .map(ResponseEntity::ok)
                         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build()));

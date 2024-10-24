@@ -11,4 +11,7 @@ import java.util.Optional;
 public interface PowerUnitRepository extends ProductRepository<PowerUnitEntity> {
     @Query("SELECT product FROM PowerUnitEntity product WHERE product.id = :productId")
     Optional<PowerUnitEntity> findProductByProductId(@Param("productId") Integer productId);
+
+    @Query("SELECT COALESCE(SUM(product.quantity), 0) FROM #{#entityName} product WHERE product.id = :productId")
+    Integer quantityByProductId(@Param("productId") Integer productId);
 }

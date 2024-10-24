@@ -1,6 +1,6 @@
 package com.nznext.geargrove.products.service;
 
-import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
+import com.nznext.geargrove.products.dtos.CpuInformationDto;
 import com.nznext.geargrove.products.entities.CPUEntity;
 import com.nznext.geargrove.products.exception.NoSuchProductException;
 import com.nznext.geargrove.products.exception.ProductAlreadyExistException;
@@ -16,7 +16,6 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Service
-@Deprecated
 @RequiredArgsConstructor
 public class CpuService {
 
@@ -25,7 +24,7 @@ public class CpuService {
     public CPUEntity createNewProduct(CPUEntity product) {
         var found = cpuRepository.findProductByProductName(product.getProductName());
 
-        if (found.isPresent()) {
+        if (found.isEmpty()) {
             log.info("Created product: {} successfully", product.getProductName());
             return cpuRepository.save(product);
         } else {
@@ -34,20 +33,29 @@ public class CpuService {
     }
 
     @Async
-    public CompletableFuture<Optional<FindProductByproductNameInformationDto>> findProductByProductName(String productName) {
+    public CompletableFuture<Optional<CpuInformationDto>> findProductByProductId(Integer id) {
         return CompletableFuture.supplyAsync(() -> {
-            var quantity = cpuRepository.quantityByProductName(productName);
+            var quantity = cpuRepository.quantityByProductId(id);
             if (quantity == 0) {
                 throw new SoldOutException("This product is sold out. Sorry😢");
             }
-            return cpuRepository.findProductByProductName(productName)
-                    .map(product -> new FindProductByproductNameInformationDto(
+            return cpuRepository.findProductByProductId(id)
+                    .map(product -> new CpuInformationDto(
                             product.getProductName(),
+                            product.getDescription(),
                             product.getPrice(),
-                            product.getDescription()
+                            product.getQuantity(),
+                            product.getSupplier(),
+                            product.getYear(),
+                            product.getSocket(),
+                            product.getThreads(),
+                            product.getCores(),
+                            product.getFrequency(),
+                            product.getTechnicalProcess(),
+                            product.getTDP()
                     ))
                     .or(() -> {
-                        throw new NoSuchProductException("No such product: " + productName);
+                        throw new NoSuchProductException("No such product");
                     });
         });
     }

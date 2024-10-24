@@ -11,4 +11,7 @@ import java.util.Optional;
 public interface CoolingSystemRepository extends ProductRepository<CoolingSystemEntity> {
     @Query("SELECT product FROM CoolingSystemEntity product WHERE product.id = :productId")
     Optional<CoolingSystemEntity> findProductByProductId(@Param("productId") Integer productId);
+
+    @Query("SELECT COALESCE(SUM(product.quantity), 0) FROM #{#entityName} product WHERE product.id = :productId")
+    Integer quantityByProductId(@Param("productId") Integer productId);
 }

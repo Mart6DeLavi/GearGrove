@@ -11,4 +11,7 @@ import java.util.Optional;
 public interface HouseRepository extends ProductRepository<HouseEntity> {
     @Query("SELECT product FROM HouseEntity product WHERE product.id = :productId")
     Optional<HouseEntity> findProductByProductId(@Param("productId") Integer productId);
+
+    @Query("SELECT COALESCE(SUM(product.quantity), 0) FROM #{#entityName} product WHERE product.id = :productId")
+    Integer quantityByProductId(@Param("productId") Integer productId);
 }

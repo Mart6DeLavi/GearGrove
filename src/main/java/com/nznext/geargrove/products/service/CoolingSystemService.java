@@ -1,6 +1,6 @@
 package com.nznext.geargrove.products.service;
 
-import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
+import com.nznext.geargrove.products.dtos.CoolingSystemInformationDto;
 import com.nznext.geargrove.products.entities.CoolingSystemEntity;
 import com.nznext.geargrove.products.exception.NoSuchProductException;
 import com.nznext.geargrove.products.exception.SoldOutException;
@@ -22,7 +22,7 @@ public class CoolingSystemService {
     public CoolingSystemEntity createNewProduct(CoolingSystemEntity product) {
         var found = coolingSystemRepository.findProductByProductName(product.getProductName());
 
-        if (found.isPresent()) {
+        if (found.isEmpty()) {
             log.info("Created product: {} successfully", product.getProductName());
             return coolingSystemRepository.save(product);
         } else {
@@ -31,20 +31,26 @@ public class CoolingSystemService {
     }
 
     @Async
-    public CompletableFuture<Optional<FindProductByproductNameInformationDto>> findProductByProductName(String productName) {
+    public CompletableFuture<Optional<CoolingSystemInformationDto>> findProductByProductId(Integer id) {
         return CompletableFuture.supplyAsync(() -> {
-            var quantity = coolingSystemRepository.quantityByProductName(productName);
+            var quantity = coolingSystemRepository.quantityByProductId(id);
             if (quantity == 0) {
                 throw new SoldOutException("This product is sold out. Sorry😢");
             }
-            return coolingSystemRepository.findProductByProductName(productName)
-                    .map(product -> new FindProductByproductNameInformationDto(
+            return coolingSystemRepository.findProductByProductId(id)
+                    .map(product -> new CoolingSystemInformationDto(
                             product.getProductName(),
+                            product.getDescription(),
                             product.getPrice(),
-                            product.getDescription()
+                            product.getQuantity(),
+                            product.getSupplier(),
+                            product.getYear(),
+                            product.getPurpose(),
+                            product.getType(),
+                            product.getFanDiameter()
                     ))
                     .or(() -> {
-                        throw new NoSuchProductException("No such product: " + productName);
+                        throw new NoSuchProductException("No such product");
                     });
         });
     }

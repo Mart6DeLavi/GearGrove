@@ -11,4 +11,7 @@ import java.util.Optional;
 public interface MotherBoardRepository extends ProductRepository<MotherBoardEntity> {
     @Query("SELECT product FROM MotherBoardEntity product WHERE product.id = :productId")
     Optional<MotherBoardEntity> findProductByProductId(@Param("productId") Integer productId);
+
+    @Query("SELECT COALESCE(SUM(product.quantity), 0) FROM #{#entityName} product WHERE product.id = :productId")
+    Integer quantityByProductId(@Param("productId") Integer productId);
 }

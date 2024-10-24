@@ -11,4 +11,7 @@ import java.util.Optional;
 public interface SSDRepository extends ProductRepository<SSDEntity> {
     @Query("SELECT product FROM SSDEntity product WHERE product.id = :productId")
     Optional<SSDEntity> findProductByProductId(@Param("productId") Integer productId);
+
+    @Query("SELECT COALESCE(SUM(product.quantity), 0) FROM #{#entityName} product WHERE product.id = :productId")
+    Integer quantityByProductId(@Param("productId") Integer productId);
 }

@@ -12,4 +12,6 @@ public interface RamRepository extends ProductRepository<RamEntity>{
     @Query("SELECT product FROM RamEntity product WHERE product.id = :productId")
     Optional<RamEntity> findProductByProductId(@Param("productId") Integer productId);
 
+    @Query("SELECT COALESCE(SUM(product.quantity), 0) FROM #{#entityName} product WHERE product.id = :productId")
+    Integer quantityByProductId(@Param("productId") Integer productId);
 }

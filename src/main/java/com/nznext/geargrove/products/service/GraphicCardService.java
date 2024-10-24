@@ -1,6 +1,6 @@
 package com.nznext.geargrove.products.service;
 
-import com.nznext.geargrove.products.dtos.FindProductByproductNameInformationDto;
+import com.nznext.geargrove.products.dtos.GraphicCardInformationDto;
 import com.nznext.geargrove.products.entities.GraphicCardEntity;
 import com.nznext.geargrove.products.exception.NoSuchProductException;
 import com.nznext.geargrove.products.exception.ProductAlreadyExistException;
@@ -24,7 +24,7 @@ public class GraphicCardService {
     public GraphicCardEntity createNewProduct(GraphicCardEntity product) {
         var found = graphicCardRepository.findProductByProductName(product.getProductName());
 
-        if (found.isPresent()) {
+        if (found.isEmpty()) {
             log.info("Created product: {} successfully", product.getProductName());
             return graphicCardRepository.save(product);
         } else {
@@ -33,20 +33,32 @@ public class GraphicCardService {
     }
 
     @Async
-    public CompletableFuture<Optional<FindProductByproductNameInformationDto>> findProductByProductName(String productName) {
+    public CompletableFuture<Optional<GraphicCardInformationDto>> findProductByProductId(Integer id) {
         return CompletableFuture.supplyAsync(() -> {
-            var quantity = graphicCardRepository.quantityByProductName(productName);
+            var quantity = graphicCardRepository.quantityByProductId(id);
             if (quantity == 0) {
                 throw new SoldOutException("This product is sold out. Sorry😢");
             }
-            return graphicCardRepository.findProductByProductName(productName)
-                    .map(product -> new FindProductByproductNameInformationDto(
+            return graphicCardRepository.findProductByProductId(id)
+                    .map(product -> new GraphicCardInformationDto(
                             product.getProductName(),
+                            product.getDescription(),
                             product.getPrice(),
-                            product.getDescription()
+                            product.getQuantity(),
+                            product.getSupplier(),
+                            product.getYear(),
+                            product.getMemory(),
+                            product.getMemoryType(),
+                            product.getTakeUpSlots(),
+                            product.getConnectionInterface(),
+                            product.getNumberOfFans(),
+                            product.getNumberOfMonitors(),
+                            product.getLength(),
+                            product.getAdditionalPower(),
+                            product.getBusBitDepth()
                     ))
                     .or(() -> {
-                        throw new NoSuchProductException("No such product: " + productName);
+                        throw new NoSuchProductException("No such product: " + id);
                     });
         });
     }
