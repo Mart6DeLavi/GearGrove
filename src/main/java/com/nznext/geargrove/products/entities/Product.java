@@ -11,7 +11,7 @@ import lombok.Setter;
 public abstract class Product {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
     @Column(name = "product_name", nullable = false)

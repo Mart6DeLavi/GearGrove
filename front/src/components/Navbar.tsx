@@ -17,6 +17,15 @@ const Navbar: React.FC = () => {
                         <NavLink to="/orders" current={location.pathname}>Orders</NavLink>
                         <NavLink to="/contact" current={location.pathname}>Contact</NavLink>
                     </div>
+                    {/* Кнопка Login or Register */}
+                    <div className="ml-6">
+                        <Link
+                            to="/login"
+                            className="bg-white text-purple-600 hover:bg-purple-600 hover:text-white transition duration-150 ease-in-out px-4 py-2 rounded-full shadow-lg"
+                        >
+                            Login or Register
+                        </Link>
+                    </div>
                 </div>
             </nav>
         </header>
