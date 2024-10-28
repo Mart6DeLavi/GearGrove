@@ -1,24 +1,52 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Orders from './pages/Orders';
 import Contact from './pages/Contact';
 import Product from './pages/Product';
+import FormContainer from './LoginAndAuthPage/FormContainer';
+import ToggleContainer from './LoginAndAuthPage/ToggleContainer';
+import styles from './LoginAndAuthPage/style.module.css'; // Обновлено на относительный путь
 
 const App: React.FC = () => {
+    const [isAuth, setIsAuth] = useState(false); // Состояние для отслеживания авторизации
+    const [isActive, setIsActive] = useState(false); // Состояние для переключения между входом и регистрацией
+
+    const handleSignUpClick = () => {
+        setIsActive(true);
+    };
+
+    const handleSignInClick = () => {
+        setIsActive(false);
+    };
+
+    const handleLoginClick = () => {
+        setIsAuth(true); // Устанавливаем состояние авторизации
+    };
+
     return (
         <Router>
             <div className="min-h-screen flex flex-col bg-gray-100">
-                <Navbar />
+                <Navbar onLoginClick={handleLoginClick} />
                 <main className="flex-grow container mx-auto px-6 py-8">
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/orders" element={<Orders />} />
+                        <Route path="/profile" element={isAuth ? <Profile /> : <Navigate to="/" />} />
+                        <Route path="/orders" element={isAuth ? <Orders /> : <Navigate to="/" />} />
                         <Route path="/contact" element={<Contact />} />
-                        <Route path="/product/:id" element={<Product />} />
+                        <Route path="/products" element={<Product />} />
+                        {/* Страница авторизации */}
+                        <Route path="/auth" element={
+                            <div className={`${styles.container} ${isActive ? styles.active : ''}`} id="container">
+                                <FormContainer type={isActive ? "sign-up" : "sign-in"} />
+                                <ToggleContainer
+                                    onSignInClick={handleSignInClick}
+                                    onSignUpClick={handleSignUpClick}
+                                />
+                            </div>
+                        } />
                     </Routes>
                 </main>
                 <footer className="bg-gray-800 text-white">
