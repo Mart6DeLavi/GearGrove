@@ -30,7 +30,7 @@ const App: React.FC = () => {
         <Router>
             <div className="min-h-screen flex flex-col bg-gray-100">
                 <Navbar onLoginClick={handleLoginClick} />
-                <main className="flex-grow container mx-auto px-6 py-8">
+                <main className="flex-grow container mx-auto px-6 py-8 pt-40">
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/profile" element={isAuth ? <Profile /> : <Navigate to="/" />} />
