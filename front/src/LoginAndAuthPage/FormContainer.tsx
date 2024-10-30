@@ -7,9 +7,10 @@ import {loginUser} from "./functions/UserLogin"; // Обновлено на от
 
 interface FormContainerProps {
     type: 'sign-in' | 'sign-up';
+    onLoginSuccess: () => void;
 }
 
-const FormContainer: React.FC<FormContainerProps> = ({ type }) => {
+const FormContainer: React.FC<FormContainerProps> = ({ type, onLoginSuccess }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
@@ -62,6 +63,7 @@ const FormContainer: React.FC<FormContainerProps> = ({ type }) => {
                 setUsername('');
                 setPassword('');
                 setError(null);
+                onLoginSuccess();
             } catch (error) {
                 if (error instanceof Error) {
                     setError(error.message);

@@ -8,12 +8,18 @@ import Contact from './pages/Contact';
 import Product from './pages/Product';
 import FormContainer from './LoginAndAuthPage/FormContainer';
 import ToggleContainer from './LoginAndAuthPage/ToggleContainer';
-import styles from './LoginAndAuthPage/style.module.css'; // Обновлено на относительный путь
+import styles from './LoginAndAuthPage/style.module.css';
 
 const App: React.FC = () => {
-    const [isAuth, setIsAuth] = useState(false); // Состояние для отслеживания авторизации
-    const [isActive, setIsActive] = useState(false); // Состояние для переключения между входом и регистрацией
+    const [isAuth, setIsAuth] = useState(false);
+    const [isActive, setIsActive] = useState(false); // Добавлено состояние isActive
 
+    // Функция для успешного входа
+    const handleLoginSuccess = () => {
+        setIsAuth(true);
+    };
+
+    // Функции для переключения isActive
     const handleSignUpClick = () => {
         setIsActive(true);
     };
@@ -22,14 +28,10 @@ const App: React.FC = () => {
         setIsActive(false);
     };
 
-    const handleLoginClick = () => {
-        setIsAuth(true); // Устанавливаем состояние авторизации
-    };
-
     return (
         <Router>
             <div className="min-h-screen flex flex-col bg-gray-100">
-                <Navbar onLoginClick={handleLoginClick} />
+                <Navbar isAuth={isAuth} />
                 <main className="flex-grow container mx-auto px-6 py-8 pt-40">
                     <Routes>
                         <Route path="/" element={<Home />} />
@@ -37,10 +39,9 @@ const App: React.FC = () => {
                         <Route path="/orders" element={isAuth ? <Orders /> : <Navigate to="/" />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/products" element={<Product />} />
-                        {/* Страница авторизации */}
                         <Route path="/auth" element={
                             <div className={`${styles.container} ${isActive ? styles.active : ''}`} id="container">
-                                <FormContainer type={isActive ? "sign-up" : "sign-in"} />
+                                <FormContainer type={isActive ? "sign-up" : "sign-in"} onLoginSuccess={handleLoginSuccess} />
                                 <ToggleContainer
                                     onSignInClick={handleSignInClick}
                                     onSignUpClick={handleSignUpClick}
