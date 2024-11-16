@@ -37,17 +37,6 @@ const Home: React.FC = () => {
                     ))}
                 </div>
             </section>
-
-            {/*<section className={styles.ctaSection}>*/}
-            {/*    <h2 className={styles.ctaTitle}>Build Your Dream PC Today</h2>*/}
-            {/*    <p className="mb-6">Explore our wide range of high-quality components</p>*/}
-            {/*    <Link*/}
-            {/*        to="/products"*/}
-            {/*        className={styles.ctaButton}*/}
-            {/*    >*/}
-            {/*        Shop All Parts*/}
-            {/*    </Link>*/}
-            {/*</section>*/}
         </div>
     );
 };

@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
-
 interface NavbarProps {
-    isAuth: boolean; // Новый пропс для состояния авторизации
+    isAuth: boolean;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
@@ -17,12 +16,31 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
                         GearGrove
                     </Link>
                     <div className="flex space-x-6">
-                        <NavLink to="/" current={location.pathname}>Home</NavLink>
-                        <NavLink to="/profile" current={location.pathname}>Profile</NavLink>
-                        <NavLink to="/orders" current={location.pathname}>Orders</NavLink>
-                        <NavLink to="/contact" current={location.pathname}>Contact</NavLink>
+                        <NavLink
+                            to="/"
+                            className={({ isActive }) => (isActive ? "active" : "")}
+                        >
+                            Home
+                        </NavLink>
+                        <NavLink
+                            to="/profile"
+                            className={({ isActive }) => (isActive ? "active" : "")}
+                        >
+                            Profile
+                        </NavLink>
+                        <NavLink
+                            to="/orders"
+                            className={({ isActive }) => (isActive ? "active" : "")}
+                        >
+                            Orders
+                        </NavLink>
+                        <NavLink
+                            to="/contact"
+                            className={({ isActive }) => (isActive ? "active" : "")}
+                        >
+                            Contact
+                        </NavLink>
                     </div>
-                    {/* Показываем кнопку только если пользователь не авторизован */}
                     {!isAuth && (
                         <div className="ml-6">
                             <Link

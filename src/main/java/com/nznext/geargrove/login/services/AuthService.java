@@ -4,6 +4,7 @@ import com.nznext.geargrove.login.dtos.UserAuthDto;
 import com.nznext.geargrove.login.dtos.UserRegistrationDto;
 import com.nznext.geargrove.login.entities.Role;
 import com.nznext.geargrove.login.entities.UserEntity;
+import com.nznext.geargrove.messages.EmailSender;
 import com.nznext.geargrove.login.repositories.RoleRepository;
 import com.nznext.geargrove.login.repositories.UserEntityRepository;
 import com.nznext.geargrove.login.utils.JwtTokenUtils;
@@ -31,6 +32,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final UserEntityRepository userEntityRepository;
     private final RoleRepository roleRepository;
+    private final EmailSender emailSender;
 
     public ResponseEntity<?> createAuthToken(UserAuthDto userAuthDto) {
         try {
@@ -43,6 +45,11 @@ public class AuthService {
                         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
                         String token = jwtTokenUtils.generateUserToken(userDetails, user.getRoles());
                         log.info("Token: {} for username: {} was generated", token, userDetails.getUsername());
+                        emailSender.sendEmail(
+                                user.getEmail(),
+                                "New login",
+                                "New login to your account"
+                        );
                         return ResponseEntity.ok(token);
                     })
                     .orElseGet(() -> {

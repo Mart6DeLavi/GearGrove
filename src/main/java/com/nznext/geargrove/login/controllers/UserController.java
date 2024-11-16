@@ -4,6 +4,7 @@ import com.nznext.geargrove.login.dtos.UserAuthDto;
 import com.nznext.geargrove.login.dtos.UserRegistrationDto;
 import com.nznext.geargrove.login.services.AuthService;
 import com.nznext.geargrove.login.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

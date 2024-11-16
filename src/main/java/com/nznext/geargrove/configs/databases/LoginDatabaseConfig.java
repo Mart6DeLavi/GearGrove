@@ -36,9 +36,13 @@ public class LoginDatabaseConfig {
     }
 
     @Bean(DATA_SOURCE)
-    public DataSource appDataSource(
+    public DataSource projectManagementDataSource(
             @Qualifier(DATABASE_PROPERTY) DatabaseProperty databaseProperty
     ) {
+        System.out.println("Database URL: " + databaseProperty.getUrl());
+        System.out.println("Username: " + databaseProperty.getUsername());
+        System.out.println("Driver Class: " + databaseProperty.getDriverClassName());
+
         return DataSourceBuilder
                 .create()
                 .username(databaseProperty.getUsername())
@@ -47,6 +51,7 @@ public class LoginDatabaseConfig {
                 .driverClassName(databaseProperty.getDriverClassName())
                 .build();
     }
+
 
     @Bean(ENTITY_MANAGER_FACTORY)
     public LocalContainerEntityManagerFactoryBean appEntityManager(

@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "type": "spring-boot",
+            "name": "Spring-boot configuration",
+            "mainClass": "com.nznext.geargrove.GearGroveApplication",
+            "module": "",
+        },
+        {
+            "type": "gradle",
+            "name": "Gradle configuration",
+            "tasks": ["build"],
+        },
+        {
+            "type": "java-source-run",
+            "name": "Java-source-run configuration",
+            "sourceFile": "src/main/java/com/nznext/geargrove/GearGroveApplication.java",
+        },
+
+    ]
+}

@@ -38,7 +38,7 @@ const App: React.FC = () => {
                         <Route path="/profile" element={isAuth ? <Profile /> : <Navigate to="/" />} />
                         <Route path="/orders" element={isAuth ? <Orders /> : <Navigate to="/" />} />
                         <Route path="/contact" element={<Contact />} />
-                        <Route path="/products" element={<Product />} />
+                        <Route path="/product/:id" element={<Product />} />
                         <Route path="/auth" element={
                             <div className={`${styles.container} ${isActive ? styles.active : ''}`} id="container">
                                 <FormContainer type={isActive ? "sign-up" : "sign-in"} onLoginSuccess={handleLoginSuccess} />

@@ -10,12 +10,24 @@ spring:
     allow-bean-definition-overriding: true
     allow-circular-references: true
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: aziteror50957@gmail.com
+    password: rrzgvvsenhhbfjif
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 geargrove:
   login:
     datasource:
       url: jdbc:postgresql://localhost:5432/Gear_Grove_Users
-      username: postgres
-      password: 28859013
+      username: ${POSTGRES_USERNAME}
+      password: ${POSTGRES_PASSWORD}
       driver-class-name: org.postgresql.Driver
   products:
     datasource:
@@ -29,6 +41,8 @@ geargrove:
       username: postgres
       password: 28859013
       driver-class-name: org.postgresql.Driver
+
+
 
 jwt:
   user_secret: s2v6asadsas1fsde1CSsaf2rewfas902u0aJWsgGIQ7382bfjafqfhqhfo

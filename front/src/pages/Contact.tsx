@@ -9,19 +9,48 @@ const Contact: React.FC = () => {
         message: '',
     });
 
+    const [responseMessage, setResponseMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
+        setErrorMessage(''); // Сбрасываем сообщение об ошибке при изменении значения
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission (e.g., send data to backend)
-        console.log('Form submitted:', formData);
-        // Reset form
+
+        // Проверка на заполнение обязательных полей
+        if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+            setErrorMessage('Please fill in all required fields.'); // Уведомление на английском
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:8080/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                setResponseMessage('Your message has been sent successfully!');
+                setErrorMessage(''); // Сброс сообщения об ошибке
+            } else {
+                setResponseMessage('Failed to send your message. Please try again later.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setResponseMessage('An error occurred while sending your message.');
+        }
+
+        // Сброс формы
         setFormData({ name: '', email: '', subject: '', message: '' });
     };
 
@@ -94,6 +123,8 @@ const Contact: React.FC = () => {
                     Send Message
                 </button>
             </form>
+            {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+            {responseMessage && <p className={styles.responseMessage}>{responseMessage}</p>}
         </div>
     );
 };

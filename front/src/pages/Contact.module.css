@@ -31,3 +31,11 @@
 .submitButton {
     @apply w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-2 px-4 rounded-md hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300;
 }
+
+.responseMessage {
+    @apply mt-4 text-center text-lg;
+}
+
+.errorMessage {
+    @apply mt-4 text-center text-lg text-red-600;
+}

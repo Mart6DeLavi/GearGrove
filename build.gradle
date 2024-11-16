@@ -59,6 +59,11 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1"
 }
 
+dependencies {
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.3.5'
+
+}
+
 tasks.named('test') {
     outputs.dir snippetsDir
     useJUnitPlatform()
