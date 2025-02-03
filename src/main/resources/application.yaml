@@ -26,8 +26,8 @@ geargrove:
   login:
     datasource:
       url: jdbc:postgresql://localhost:5432/Gear_Grove_Users
-      username: ${POSTGRES_USERNAME}
-      password: ${POSTGRES_PASSWORD}
+      username: postgres
+      password: 28859013
       driver-class-name: org.postgresql.Driver
   products:
     datasource:
