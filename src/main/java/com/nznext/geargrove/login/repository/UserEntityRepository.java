@@ -19,6 +19,7 @@ import java.util.Optional;
  *   exception translation and enabling it to be injected into other Spring components.</li>
  * </ul>
  */
+
 @Repository
 public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
 

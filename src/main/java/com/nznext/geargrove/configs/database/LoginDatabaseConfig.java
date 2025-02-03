@@ -38,10 +38,10 @@ public class LoginDatabaseConfig {
     public static final String PROPERTY_PREFIX = "geargrove.login.datasource";
 
     /** Base package for JPA repositories related to the login module. */
-    public static final String JPA_REPOSITORY_PACKAGE = "com.nznext.geargrove.login.repositories";
+    public static final String JPA_REPOSITORY_PACKAGE = "com.nznext.geargrove.login.repository";
 
     /** Base package for entity classes related to the login module. */
-    public static final String ENTITY_PACKAGE = "com.nznext.geargrove.login.entities";
+    public static final String ENTITY_PACKAGE = "com.nznext.geargrove.login.entity";
 
     /** Bean name for the entity manager factory. */
     public static final String ENTITY_MANAGER_FACTORY = "loginEntityManagerFactory";

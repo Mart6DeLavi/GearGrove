@@ -45,10 +45,10 @@ public class OrdersDatabaseConfig {
     public static final String PROPERTY_PREFIX = "geargrove.orders.datasource";
 
     /** Base package for JPA repositories related to the orders module. */
-    public static final String JPA_REPOSITORY_PACKAGE = "com.nznext.geargrove.orders.repositories";
+    public static final String JPA_REPOSITORY_PACKAGE = "com.nznext.geargrove.orders.repository";
 
     /** Base package for entity classes related to the orders module. */
-    public static final String ENTITY_PACKAGE = "com.nznext.geargrove.orders.entities";
+    public static final String ENTITY_PACKAGE = "com.nznext.geargrove.orders.entity";
 
     /** Bean name for the entity manager factory. */
     public static final String ENTITY_MANAGER_FACTORY = "ordersEntityManagerFactory";
