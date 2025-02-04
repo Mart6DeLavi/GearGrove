@@ -5,6 +5,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   main:
     allow-bean-definition-overriding: true
@@ -26,20 +27,20 @@ geargrove:
   login:
     datasource:
       url: jdbc:postgresql://localhost:5432/Gear_Grove_Users
-      username: postgres
-      password: 28859013
+      username: ${POSTGRES_USERNAME}
+      password: ${POSTGRES_PASSWORD}
       driver-class-name: org.postgresql.Driver
   products:
     datasource:
       url: jdbc:postgresql://localhost:5432/Gear_Grove_Products
-      username: postgres
-      password: 28859013
+      username: ${POSTGRES_USERNAME}
+      password: ${POSTGRES_PASSWORD}
       driver-class-name: org.postgresql.Driver
   orders:
     datasource:
-      url: jdbc:postgresql://localhost:5432/Gear_Grove_Orders
-      username: postgres
-      password: 28859013
+      url: jdbc:postgresql://localhost:5432./Gear_Grove_Orders
+      username: ${POSTGRES_USERNAME}
+      password: ${POSTGRES_PASSWORD}
       driver-class-name: org.postgresql.Driver
 
 

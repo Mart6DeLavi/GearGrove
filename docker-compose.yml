@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: geargrove_db
+    restart: always
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    environment:
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      retries: 5
+      start_period: 10s
+    env_file:
+      - .env
+
+
+  geargrove:
+    build: .
+    container_name: geargrove_app
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_GEARGROVE_LOGIN_DATASOURCE_URL: jdbc:postgresql://postgres:5432/Gear_Grove_Users
+      SPRING_GEARGROVE_PRODUCTS_DATASOURCE_URL: jdbc:postgresql://postgres:5432/Gear_Grove_Products
+      SPRING_GEARGROVE_ORDERS_DATASOURCE_URL: jdbc:postgresql://postgres:5432/Gear_Grove_Orders
+      POSTGRES_USERNAME: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "8080:8080"
+volumes:
+  pg_data:
